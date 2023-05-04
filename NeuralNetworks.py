@@ -47,15 +47,16 @@ def get_number():
         num = input("Pick a number between 0 and 999 or enter -1 to exit: ")
         if num.isdigit():
             num = int(num)
-            if -1 <= num <= 999:
-                return int(num)
-            else:
-                print("Try again...")
+            if 0<= num <= 999:
+                return num
+        elif num == '-1':
+            return num
+        else:
+            print("Try again...")
 
 while True:
     num = get_number()
-    p
-    if num == -1:
+    if num == '-1':
         break
     image = test_images[num]
     label = test_labels[num]
