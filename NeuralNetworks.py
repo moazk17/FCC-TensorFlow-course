@@ -27,7 +27,7 @@ model = keras.Sequential([ # build the model
 model.compile(optimizer='adam', # optimizer — This is how the model is updated based on the data it sees and its loss function.
               loss='sparse_categorical_crossentropy', # loss function — This measures how accurate the model is during training.
               metrics=['accuracy']) # metrics — Used to monitor the training and testing steps. The following example uses accuracy, the fraction of the images that are correctly classified.
-model.fit(train_images, train_labels, epochs=1) # train the model 
+model.fit(train_images, train_labels, epochs=5) # train the model 
 
 test_loss, test_acc = model.evaluate(test_images, test_labels, verbose=1) # evaluate accuracy
 print('Test accuracy:', test_acc) 
