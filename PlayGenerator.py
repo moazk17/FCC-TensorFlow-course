@@ -37,7 +37,7 @@ def split_input_target(chunk):
     target_text = chunk[1:]
     return input_text, target_text
 
-# dataset = sequences.map(split_input_target)
+dataset = sequences.map(split_input_target)
 # for x,y in dataset.take(2):
 #     print("\n\nExample\n")
 #     print("input")
@@ -47,8 +47,20 @@ def split_input_target(chunk):
 
 BATCH_SIZE = 64
 VOCAB_SIZE = len(vocab) 
-EMVEDDING_DIM = 256
+EMBEDDING_DIM = 256
 RNN_UNITS = 1024
+BUFFER_SIZE = 10000
+
+data = dataset.shuffle(BUFFER_SIZE).batch(BATCH_SIZE, drop_remainder=True)
 
 
- 
+def build_model(vocab_size, embedding_dim, rnn_units, batch_size):
+    model = keras.Sequential([
+        keras.layers.Embedding(vocab_size, embedding_dim, batch_input_shape = [batch_size, None]),
+        keras.layers.LSTM(rnn_units, return_sequences = True,  stateful=True, 
+        recurrent_initializer = 'glorot_uniform'),
+        keras.layers.Dense(vocab_size)
+    ])
+    return model
+model = build_model(VOCAB_SIZE, EMBEDDING_DIM, RNN_UNITS, BATCH_SIZE)
+model.summary() 
